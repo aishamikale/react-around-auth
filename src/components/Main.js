@@ -19,12 +19,6 @@ function Main (props) {
         .catch((err) => {
             console.log(err)
         })
-    }, []);
-
-    //request cards from the server
-    //"copy the card layout located inside the template 
-    //tag and use it inside the JSX that iterates over the cards array."
-    React.useEffect(() => {
         api.getInitialCards()
         .then((res) => {
             const cards = res.map((card) => ({
@@ -33,14 +27,14 @@ function Main (props) {
               link: card.link,
               likes: card.likes.length,
             }));
-            // console.log(res);
+            //console.log(res);
             setCards(cards);
           })
     
           .catch((err) => {
             console.log(err);
           });
-      }, []);
+    }, []);
     
     return(
         <main className="content">

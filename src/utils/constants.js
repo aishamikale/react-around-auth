@@ -1,5 +1,4 @@
 //open buttons
-const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
 
 //form inputs
@@ -9,7 +8,6 @@ const cardTitleInput = document.querySelector(".form__input_type_card-title");
 const cardUrlInput = document.querySelector(".form__input_type_url");
 
 export { 
-editButton,
 addButton,
 nameInput,
 titleInput,

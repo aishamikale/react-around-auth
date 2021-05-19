@@ -33,7 +33,7 @@ function App() {
         setIsAddPlacePopupOpen(false);
         setIsEditAvatarPopupOpen(false);
         setIsImagePopupOpen(false);
-        setSelectedCard(false);
+        setSelectedCard({});
     }
 
     //set the card name and link
@@ -68,8 +68,8 @@ function App() {
               className="form__input form__input_type_name" 
               name="username" 
               placeholder="Name" 
-              minLength="4" 
-              maxLength="40" 
+              minLength={4} 
+              maxLength={40} 
               required
             />
             <span id="profile-name-error" className="modal__error"></span>
@@ -80,8 +80,8 @@ function App() {
               className="form__input form__input_type_title" 
               name="title" 
               placeholder="Description" 
-              minLength="2" 
-              maxLength="200" 
+              minLength={2} 
+              maxLength={200} 
               required
             />
             <span id="profile-title-error" className="modal__error"></span>
@@ -100,8 +100,8 @@ function App() {
               className="form__input form__input_type_card-title" 
               name="place" 
               placeholder="Title" 
-              minLength="1" 
-              maxLength="30" 
+              minLength={1} 
+              maxLength={30} 
               required
             />
             <span id="card-title-error" className="modal__error"></span>
@@ -130,7 +130,7 @@ function App() {
               className="form__input form__input_type_avatar" 
               name="avatar" 
               placeholder="url" 
-              minLength="4" 
+              minLength={4} 
               required
             />
             <span id="avatar-icon-error" className="modal__error"></span>
