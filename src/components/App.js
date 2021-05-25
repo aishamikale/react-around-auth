@@ -5,6 +5,8 @@ import Main from './Main.js';
 import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
+import api from "../utils/Api.js";
+import { currentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
     //useState Hook - initial state of popups
@@ -13,6 +15,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
     const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
     const [selectedCard, setSelectedCard] = React.useState({});
+    const [currentUser, setCurrentUser] = React.useState("");
 
 
     //SET the modals open
@@ -42,7 +45,19 @@ function App() {
         setSelectedCard({name, link});
     }
 
+    //request user info from the server
+    React.useEffect(() => {
+      api.getUsersInfo()
+        .then((res) => {
+          setCurrentUser(res)
+        })
+        .catch((err) =>{
+          console.log(err);
+        })
+    }, []);
+
   return (
+    <currentUserContext.Provider value={currentUser}>
       <div className="page">
           <div className="page__container">
               <Header/>
@@ -150,6 +165,7 @@ function App() {
         >
         </ImagePopup>
       </div>
+    </currentUserContext.Provider>
   );
 }
 

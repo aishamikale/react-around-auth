@@ -1,4 +1,11 @@
+import React from "react";
+import { currentUserContext } from "../contexts/CurrentUserContext";
+
 function Card ({ card, onCardClick }) {
+    const cardInfo = React.useContext(currentUserContext);
+    //console.log(card);
+    //const isOwn = card.owner._id === cardInfo._id;
+
     function handleClick() {
         onCardClick(card);
     } 
