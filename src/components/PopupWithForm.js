@@ -1,17 +1,17 @@
-function PopupWithForm(props) {
-    return (
-        //popup with form structure
-        <div className={`modal modal_type_${props.name} ${props.isOpen ? 'modal_open' : ""}`}>
-            <div className="modal__container">
-            <form action="#" className={`form form_type_${props.name}`} name={props.name}>
-                    <h2 className="form__heading">{`${props.title}`}</h2>
-                    {props.children}
-                    <button className="form__button" type="submit">{props.buttonText}</button>
-                </form>
-                <button className="modal__button" type="button" aria-label="close popup" onClick={props.onClose}></button>
-            </div>
-        </div>
-    );
-  }
-
-  export default PopupWithForm;
+function PopupWithForm({ name, title, isOpen, children, buttonText, onClose}) { 
+    return ( 
+        //popup with form structure 
+        <div className={`modal modal_type_${name} && ${isOpen ? 'modal_open' : ""}`}> 
+            <div className="modal__container"> 
+            <form action="#" className={`form form_type_${name}`} name={name}> 
+                    <h2 className="form__heading">{`${title}`}</h2> 
+                    {children} 
+                    <button className="form__button" type="submit">{buttonText}</button> 
+                </form> 
+                <button className="modal__button" type="button" aria-label="close popup" onClick={onClose}></button> 
+            </div> 
+        </div> 
+    ); 
+  } 
+ 
+  export default PopupWithForm; 
