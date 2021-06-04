@@ -17,7 +17,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false); 
     const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false); 
     const [selectedCard, setSelectedCard] = React.useState({});
-    const [currentUser, setCurrentUser] = React.useState("");
+    const [currentUser, setCurrentUser] = React.useState({});
     const [cards, setCards] = React.useState([]);
  
 
@@ -50,7 +50,7 @@ function App() {
 
   function handleAddPlaceSubmit({name, link}) {
     api.addCard({name, link})
-      .then((newCard) =>{
+      .then((newCard) => {
         setCards([newCard, ...cards])
       })
       .then(()=> {
@@ -89,7 +89,10 @@ function handleCardLike(card) {
 
   api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-  });
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 }
 
 //delete card function 

@@ -21,6 +21,9 @@ function AddPlacePopup(props) {
           name,
           link
         });
+
+        setName('');
+        setLink('');
       }
 
     return(
@@ -28,7 +31,7 @@ function AddPlacePopup(props) {
             isOpen={props.isOpen} 
             name={`cardForm`} 
             title={`New place`} 
-            buttonText={`Create`} 
+            buttonText={`Create`}
             onClose={props.onClose}
             onSubmit={handleSubmit}
         > 
@@ -40,6 +43,7 @@ function AddPlacePopup(props) {
               placeholder="Title"  
               minLength={1}  
               maxLength={30}
+              value={name}
               onChange={handleNameChange}
               required 
             /> 
@@ -51,6 +55,7 @@ function AddPlacePopup(props) {
               className="form__input form__input_type_url"  
               name="website"  
               placeholder="Image link"
+              value={link}
               onChange={handleLink} 
               required 
             /> 
