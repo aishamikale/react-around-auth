@@ -1,7 +1,7 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm.js";
 
-function AddCardPopup(props) {
+function AddPlacePopup(props) {
     const [name, setName] = React.useState('');
     const [link, setLink] = React.useState('');
 
@@ -59,4 +59,4 @@ function AddCardPopup(props) {
     );
 }
 
-export default AddCardPopup;
+export default AddPlacePopup;

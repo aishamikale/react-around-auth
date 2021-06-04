@@ -6,9 +6,9 @@ import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
-import AddCardPopup from './AddCardPopup';
+import AddPlacePopup from './AddPlacePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import api from "../utils/Api.js";
+import api from "../utils/api";
  
 function App() { 
     //useState Hook - initial states and set states
@@ -155,12 +155,12 @@ function handleCardDelete(card) {
         > 
         </EditProfilePopup> 
  
-        <AddCardPopup 
+        <AddPlacePopup 
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
         > 
-        </AddCardPopup> 
+        </AddPlacePopup> 
  
         <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen} 
