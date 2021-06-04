@@ -1,73 +1,76 @@
-// import React from "react";
-// import PopupWithForm from "./PopupWithForm.js";
-// import { currentUserContext } from '../contexts/CurrentUserContext';
+import React from "react";
+import PopupWithForm from "./PopupWithForm.js";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-// function EditProfilePopup(props) {
-//     const [name, setName] = React.useState('');
-//     const [description, setDescription] = React.useState('');
+function EditProfilePopup(props) {
+    const [name, setName] = React.useState('');
+    const [description, setDescription] = React.useState('');
 
-//     //subscribe to the context
-//     const presentUser = React.useContext(currentUserContext);
+    //subscribe to the context
+    const presentUser = React.useContext(CurrentUserContext);
 
-//     function handleNameChange(e) {
-//         setName(e.target.value);
-//     }
+    function handleNameChange(e) {
+        setName(e.target.value);
+    }
 
-//     function handleDescription(e) {
-//         setDescription(e.target.value);
-//     }
+    function handleDescription(e) {
+        setDescription(e.target.value);
+    }
 
-//     function handleSubmit(e) {
-//         e.preventDefault();
+    function handleSubmit(e) {
+        // Prevent the browser from navigating to the form address
+        e.preventDefault();
+      
+        // Pass the values of the managed components to the external handler
+        props.onUpdateUser({
+          name,
+          about: description,
+        });
+      } 
 
-//         //pass values of managed components to external handler
-//         props.onUpdateUser({
-//             name,
-//             about: description,
-//         });
-//     }
+    // After loading the current user from the API
+    // their data will be used in managed components.
+    React.useEffect(() =>{
+        setName(presentUser.name);
+        setDescription(presentUser.about);
+    }, [presentUser])
 
-//     React.useEffect(() =>{
-//         setName(presentUser.name);
-//         setDescription(presentUser.about);
-//     }, [presentUser])
+    return(
+        <PopupWithForm
+        isOpen={props.isOpen}
+        onSubmit={handleSubmit}
+        name={`profileForm`}
+        title={`Edit Profile`}
+        buttonText={`Save`}
+        onClose={props.onClose}
+    >
+        <input
+          id="profile-name" 
+          type="text" 
+          className="form__input form__input_type_name"
+          name="username"
+          placeholder="Name" 
+          minLength={4}
+          maxLength={40}
+          onChange={handleNameChange}
+          required
+        />
+        <span id="profile-name-error" className="modal__error"></span>
 
-//     return(
-//         <PopupWithForm
-//         isOpen={props.isOpen}
-//         onSubmit={handleSubmit}
-//         name={`profileForm`}
-//         title={`Edit Profile`}
-//         buttonText={`Save`}
-//         onClose={props.onClose}
-//     >
-//         <input 
-//           id="profile-name" 
-//           type="text" 
-//           className="form__input form__input_type_name" 
-//           name="username"
-//           placeholder="Name" 
-//           minLength={4}
-//           maxLength={40}
-//           onChange={handleNameChange}
-//           required
-//         />
-//         <span id="profile-name-error" className="modal__error"></span>
+        <input 
+          id="profile-title" 
+          type="text" 
+          className="form__input form__input_type_title"
+          name="title" 
+          placeholder="Description" 
+          minLength={2} 
+          maxLength={200}
+          onChange={handleDescription}
+          required
+        />
+        <span id="profile-title-error" className="modal__error"></span>
+    </PopupWithForm> 
+    );
+}
 
-//         <input 
-//           id="profile-title" 
-//           type="text" 
-//           className="form__input form__input_type_title" 
-//           name="title" 
-//           placeholder="Description" 
-//           minLength={2} 
-//           maxLength={200}
-//           onChange={handleDescription}
-//           required
-//         />
-//         <span id="profile-title-error" className="modal__error"></span>
-//     </PopupWithForm> 
-//     );
-// }
-
-// export default EditProfilePopup;
+export default EditProfilePopup;

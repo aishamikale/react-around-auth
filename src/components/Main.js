@@ -1,63 +1,57 @@
 import React from "react"; 
-import api from '../utils/Api.js'; 
-import Card from './Card.js'; 
+//import api from '../utils/Api.js'; 
+import Card from './Card.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
  
-function Main ({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) { 
-    const [userName, setUserName] = React.useState(""); 
-    const [userDescription, setUserDescription] = React.useState(""); 
-    const [userAvatar, setUserAvatar] = React.useState(""); 
-    const [cards, setCards] = React.useState([]); 
- 
-    //request user info from the servers
-    React.useEffect(() =>{
-        api.getUsersInfo().then((res) =>{
-            setUserName(res.name); 
-            setUserDescription(res.about); 
-            setUserAvatar(res.avatar); 
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    },[])
+function Main ({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, cards, onCardDelete }) { 
+    // const [cards, setCards] = React.useState([]);
+
+    //subscribe to the user context
+    const currentUser = React.useContext(CurrentUserContext);
 
     //get initial cards from the server
-    React.useEffect(() => {
-        api.getInitialCards().then((data) =>{
-            setCards(data);
-            // const cards = res.map((card) => ({ 
-            //     id: card._id, 
-            //     name: card.name, 
-            //     link: card.link, 
-            //     likes: card.likes.length, 
-            //   })); 
-            //   //console.log(res); 
-            //   setCards(cards); 
-         })
-         .catch((err) => {
-             console.log(err)
-         })
-    },[])
+    // React.useEffect(() => {
+    //     api.getInitialCards().then((data) =>{
+    //         setCards(data);
+    //      })
+    //      .catch((err) => {
+    //          console.log(err)
+    //      })
+    // },[])
+
+    // function handleCardLike(card) {
+    //     //check if card was already liked
+    //     const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    //     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+    //         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    //     });
+    // }
      
     return( 
-        <main className="content"> 
+        <main className="content">
                 <section className="profile"> 
                     <div className="profile__avatar-overlay" onClick={onEditAvatar}></div> 
-                    <img src={userAvatar} alt="User avatar" className="profile__avatar" /> 
+                    <img src={currentUser.avatar} alt="User avatar" className="profile__avatar" /> 
                     <div className="profile__info"> 
-                            <h1 className="profile__title">{userName}</h1> 
+                            <h1 className="profile__title">{currentUser.name}</h1> 
                             <button className="profile__edit-button" type="button" aria-label="edit" onClick={onEditProfile}></button> 
-                            <p className="profile__subtitle">{userDescription}</p> 
+                            <p className="profile__subtitle">{currentUser.about}</p> 
                     </div> 
                     <button className="profile__add-button" type="button" aria-label="add" onClick={onAddPlace}></button> 
                 </section> 
                 <section className="cards"> 
                     <ul className="cards__grid">
                         {cards.map((card) => (
-                            <Card key={card._id} card={card} link={card.link} name={card.name} likes={card.likes} onCardClick={onCardClick} />
+                            <Card key={card._id} 
+                            card={card} 
+                            link={card.link}
+                            name={card.name}
+                            likes={card.likes}
+                            onCardClick={onCardClick} 
+                            onCardLike={onCardLike}
+                            onCardDelete={onCardDelete} />
                         ))}
-                        {/* {cards.map((card, id) => { 
-                            return (<Card key={id} card={card} onCardClick={onCardClick}/>); 
-                        })}  */}
                     </ul> 
                 </section> 
             </main> 
