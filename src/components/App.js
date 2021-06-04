@@ -104,7 +104,6 @@ function handleCardDelete(card) {
     })
 }
 
- 
     //SET the modals open 
     function handleEditProfileClick() { 
         setIsEditProfilePopupOpen(true); 

@@ -14,7 +14,6 @@ function AddCardPopup(props) {
     }
 
     function handleSubmit(e) {
-        // Prevent the browser from navigating to the form address
         e.preventDefault();
       
         // Pass the values of the managed components to the external handler
@@ -23,7 +22,6 @@ function AddCardPopup(props) {
           link
         });
       }
-
 
     return(
         <PopupWithForm 

@@ -42,7 +42,7 @@ class Api {
       })
       .then(this._checkResponse)
     }
-    
+
     editProfile({name, about}) {
       return fetch(this._baseUrl + "/users/me", {
         method: "PATCH",
@@ -82,22 +82,7 @@ class Api {
         .then(this._checkResponse)
       }
     }
-    // addLikes(cardId){
-    //   return fetch(this._baseUrl + "/cards/likes/" + cardId, {
-    //     method: "PUT",
-    //     headers: this._headers,
-    //   })
-    //   .then(this._checkResponse)
-    // }
-    // removeLike(cardId){
-    //   return fetch(this._baseUrl + "/cards/likes/" + cardId, {
-    //     method: "DELETE",
-    //     headers: this._headers,
-    //   })
-    //   .then(this._checkResponse)
-    // }
-
-
+   
     updateAvatar(avatar) {
       return fetch(this._baseUrl + "/users/me/avatar", {
         method: "PATCH",

@@ -6,13 +6,10 @@ function EditAvatarPopup(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-
         props.onUpdateAvatar(avatarRef.current.value);
-
     }
 
     return(
-
         <PopupWithForm 
             isOpen={props.isOpen} 
             name={`avatarForm`} 

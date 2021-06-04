@@ -6,7 +6,6 @@ function EditProfilePopup(props) {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
 
-    //subscribe to the context
     const presentUser = React.useContext(CurrentUserContext);
 
     function handleNameChange(e) {
@@ -18,7 +17,6 @@ function EditProfilePopup(props) {
     }
 
     function handleSubmit(e) {
-        // Prevent the browser from navigating to the form address
         e.preventDefault();
       
         // Pass the values of the managed components to the external handler
