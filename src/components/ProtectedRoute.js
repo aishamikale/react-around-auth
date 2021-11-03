@@ -4,6 +4,9 @@ import { Route, Redirect } from 'react-router-dom';
 
 /* takes a component as a prop, as well as any number of
 props to pass down to that component */
+
+// capital C with Component because components are capitalized.
+
 const ProtectedRoute = ({ component: Component, ...props }) => {
     return (
         <Route>

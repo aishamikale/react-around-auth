@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
@@ -13,10 +13,13 @@ import Login from "./Login.js";
 import ProtectedRoute from "./ProtectedRoute.js";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from "../utils/api";
+import * as auth from "../utils/auth.js";
 
 //need a state of isLoggedIn, setIsLoggedIn
 
 function App() {
+  let history = useHistory();
+
   //useState Hook - initial states and set states
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -27,6 +30,20 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
 
+  // uses the auth file to create a new user
+
+  function handleRegister(email, password) {
+    auth.register(email, password)
+      .then((data) => {
+        console.log(data);
+        if (data) {
+          history.push('/signin');
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   //functions to update user info, avatar, and add cards
   function handleUpdateUser(info) {
@@ -176,7 +193,9 @@ function App() {
               />
             </Route> */}
             <Route path="/signup">
-              <Register />
+              <Register
+                onRegister={handleRegister}
+              />
             </Route>
             <Route path="/signin">
               <Login />
