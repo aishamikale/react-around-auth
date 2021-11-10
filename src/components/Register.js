@@ -1,73 +1,49 @@
 import React from "react";
-// import * as auth from "../utils/auth";
-// import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Register({ onRegister }) {
-    //let history = useHistory();
+    // let history = useHistory();
 
-    // set state with an object that has
-    // email and password
-    const [inputs, setInputs] = React.useState({
-        email: "",
-        password: "",
-    });
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
-    // 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        // getting the previous state & adding the current one
-        setInputs({
-            ...inputs,
-            [name]: value,
-        });
+    function handleEmail(e) {
+        setEmail(e.target.value);
+    }
+
+    function handlePassword(e) {
+        setPassword(e.target.value);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { email, password } = inputs;
         onRegister(email, password);
+        // history.push('/signin');
     }
 
-    // function handleEmailChange(e) {
-    //     setEmail(e.target.value);
-    // }
-
-    // function handlePasswordChange(e) {
-    //     setPassword(e.target.value);
-    // }
-
-    // function handleSubmit(e) {
-    //     e.preventDefault();
-    //     props.onRegister(email, password)
-    // }
-
     return (
-        <section className="register">
-            <div className="register__container">
-                <form className="register__form" onSubmit={handleSubmit} >
-                    <h2 className="register__heading">Sign Up</h2>
-                    <input
-                        className="form__input"
-                        name="email" type="email"
-                        placeholder="Email"
-                        onChange={handleInputChange}
-                        value={inputs.email}
-                    />
-                    <input
-                        className="form__input"
-                        name="password"
-                        type="password"
-                        placeholder="Password"
-                        onChange={handleInputChange}
-                        value={inputs.password} />
+        <div className="form__container">
+            <form className="form" onSubmit={handleSubmit} >
+                <h2 className="form__title">Sign Up</h2>
+                <input
+                    className="form__field"
+                    name="email" type="email"
+                    placeholder="Email"
+                    onChange={handleEmail}
+                    value={email}
+                />
+                <input
+                    className="form__field"
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    onChange={handlePassword}
+                    value={password} />
 
-                    <button className="register__button" type="submit">Sign Up</button>
-                </form>
-                <div className="register__signin">
-                    <p className="register-signin__text">Already a member?</p>
-                </div>
-            </div>
-        </section>
+                <button className="form__submit" type="submit">Sign Up</button>
+                <Link className="form__link" to="/signin">Already a member? Log in here!</Link>
+            </form>
+        </div>
     )
 }
 

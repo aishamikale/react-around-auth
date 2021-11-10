@@ -1,39 +1,48 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+// import { authorization } from "../utils/auth";
+// import { useHistory } from 'react-router-dom';
 
 
-function Login() {
-
-    const [username, setUsername] = React.useState('');
+function Login({ onLogin }) {
+    // const history = useHistory();
+    const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const handleUsername = () => {
-
-
+    function handleEmail(e) {
+        setEmail(e.target.value);
     }
 
-    const handlePassword = () => {
-
+    function handlePassword(e) {
+        setPassword(e.target.value);
     }
 
-    const handleSubmit = () => {
-
+    function handleSubmit(e) {
+        e.preventDefault();
+        onLogin(password, email);
     }
-
 
     return (
-        <section className="login">
-            <div className="login__container">
-                <form className="login__form">
-                    <h2 className="login__heading">Log in</h2>
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button type="submit">Log in</button>
-                </form>
-                <div className="register__signin">
-                    <p className="register-signin__text">Not a member yet? Sign up here!</p>
-                </div>
-            </div>
-        </section>
+        <div className="form__container">
+            <form className="form" onSubmit={handleSubmit}>
+                <h2 className="form__title">Log in</h2>
+                <input
+                    className="form__field"
+                    type="email"
+                    placeholder="Email"
+                    onChange={handleEmail}
+                    value={email}
+                />
+                <input
+                    className="form__field"
+                    type="password"
+                    placeholder="Password"
+                    onChange={handlePassword}
+                    value={password} />
+                <button className="form__submit" type="submit">Log in</button>
+                <Link className="form__link" to="signup">Not a member yet? Sign up here!</Link>
+            </form>
+        </div>
     )
 }
 

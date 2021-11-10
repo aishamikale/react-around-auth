@@ -1,10 +1,10 @@
 export const BASE_URL = 'https://register.nomoreparties.co';
 
-export const checkResponse = (res) => {
-    if (res.ok) {
-        return res.json();
+export const checkResponse = (response) => {
+    if (response.ok) {
+        return response.json();
     }
-    return Promise.reject(`Error: ${res.status}`);
+    return Promise.reject(`Error: ${response.status}`);
 }
 
 // creates a new user
@@ -18,28 +18,35 @@ export const register = (email, password) => {
         body: JSON.stringify({ email, password }),
     })
         .then((res) => {
-            checkResponse(res);
+            return res.json();
+            // res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+        })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => {
+            console.log(`Error: ${err}`);
         })
 };
 
-
-
-export const authorization = (email, password) => {
+export const authorization = (password, email) => {
     return fetch(`${BASE_URL}/signin`, {
         method: "POST",
         header: {
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ password, email }),
     })
         .then((res) => {
-            checkResponse(res);
+            res.json();
         })
         .then((data) => {
-            if (data.jwt) {
-                localStorage.setItem("jwt", data.jwt);
+            if (data) {
+                localStorage.setItem("token", data.token);
                 return data;
+            } else {
+                return;
             }
         })
         .catch((err) => console.log(err));
@@ -47,7 +54,7 @@ export const authorization = (email, password) => {
 
 // get info from profile, such as username
 export const getContent = (token) => {
-    return fetch(`${BASE_URL}/signin`, {
+    return fetch(`${BASE_URL}/users/me`, {
         method: "GET",
         header: {
             Accept: "application/json",
@@ -55,7 +62,8 @@ export const getContent = (token) => {
             'Authorization': `Bearer ${token}`,
         }
     })
-        .then((res) => {
-            checkResponse(res);
-        })
+        .then(checkResponse);
+    // .catch((err) => {
+    //     console.log(err)
+    // })
 }
