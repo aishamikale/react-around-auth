@@ -29,6 +29,7 @@ function App() {
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
+  const [userEmail, setUserEmail] = React.useState('');
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isSuccessful, setIsSuccessful] = React.useState(false);
@@ -154,7 +155,6 @@ function App() {
     auth.register(email, password)
       .then((res) => {
         if (!res || res.statusCode === 400) {
-          console.log(res);
           setIsSuccessful(false);
           setIsInfoToolTipOpen(true);
         } else {
@@ -173,7 +173,7 @@ function App() {
     if (token) {
       auth.getContent(token)
         .then((res) => {
-          console.log(res)
+          setUserEmail(res.data.email);
           setLoggedIn(true);
           setIsSuccessful(true);
           history.push('/');
@@ -192,30 +192,35 @@ function App() {
     auth.authorization(password, email)
       .then((res) => {
         if (!res) {
-          console.log(res.error);
           setLoggedIn(false);
           setIsSuccessful(false);
           setIsInfoToolTipOpen(true);
           // history.push("/");
         } if (res.err) {
-          console.log(res.error);
           setIsSuccessful(false);
-          setIsInfoToolTipOpen(true)
+          setIsInfoToolTipOpen(true);
         }
+        setIsInfoToolTipOpen(true)
         tokenCheck();
       })
       .catch((err) => {
-        console.log(err, "error logging in");
+        console.log(err);
         setIsSuccessful(false);
         setIsInfoToolTipOpen(true);
       })
+  }
+
+  function onSignOut() {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    setUserEmail("");
+    history.push("/signin");
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="page__container">
-          <Header />
           <Switch>
             <ProtectedRoute exact path="/" loggedIn={loggedIn} component={Main}
               onEditProfile={handleEditProfileClick}
@@ -224,13 +229,17 @@ function App() {
               onCardClick={handleCardClick}
               onCardLike={handleCardLike}
               onCardDelete={handleCardDelete}
-              cards={cards} />
+              cards={cards}
+              userEmail={userEmail}
+              onSignOut={onSignOut} />
             <Route path="/signup">
+              <Header link={"/signin"} text={"Sign In"} userEmail={userEmail}></Header>
               <Register
                 onRegister={handleRegister}
               />
             </Route>
             <Route path="/signin">
+              <Header link={"/signup"} text={"Sign Up"} userEmail={userEmail}></Header>
               <Login onLogin={handleLogin} />
             </Route>
             <Route exact path="/">
