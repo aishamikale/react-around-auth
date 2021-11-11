@@ -1,11 +1,8 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-// import { authorization } from "../utils/auth";
-// import { useHistory } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom';
 
 function Login({ onLogin }) {
-    // const history = useHistory();
+    const history = useHistory();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
@@ -19,7 +16,9 @@ function Login({ onLogin }) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        console.log(password, email);
         onLogin(password, email);
+        history.push('/');
     }
 
     return (
@@ -32,13 +31,16 @@ function Login({ onLogin }) {
                     placeholder="Email"
                     onChange={handleEmail}
                     value={email}
+                    required
                 />
                 <input
                     className="form__field"
                     type="password"
                     placeholder="Password"
                     onChange={handlePassword}
-                    value={password} />
+                    value={password}
+                    required
+                />
                 <button className="form__submit" type="submit">Log in</button>
                 <Link className="form__link" to="signup">Not a member yet? Sign up here!</Link>
             </form>

@@ -31,11 +31,14 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [userData, setUserData] = React.useState({});
-  // const [userEmail, setUserEmail] = React.useState('');
   const [isSuccessful, setIsSuccessful] = React.useState(false);
 
   //get user info from server
+
+  React.useEffect(() => {
+    tokenCheck();
+  })
+
   React.useEffect(() => {
     api.getUsersInfo()
       .then((res) => {
@@ -54,10 +57,6 @@ function App() {
         console.log(err)
       })
   }, [])
-
-  // React.useEffect(() => {
-  //   tokenCheck();
-  // }, [history])
 
   // update user info-avatar, add cards
   function handleUpdateUser(info) {
@@ -174,33 +173,41 @@ function App() {
     if (token) {
       auth.getContent(token)
         .then((res) => {
-          const userData = {
-            email: res.email,
-          };
-          handleLogin();
-          setUserData(userData);
+          console.log(res)
+          setLoggedIn(true);
+          setIsSuccessful(true);
           history.push('/');
         })
         .catch((err) => {
           console.log(err);
         })
+    } else {
+      setLoggedIn(false);
+      setIsSuccessful(false);
     }
   }
 
-  // log in current user
-  // set loggedIn to true
+  // log in user
   function handleLogin(password, email) {
     auth.authorization(password, email)
       .then((res) => {
         if (!res) {
-          console.log("there is not response")
+          console.log(res.error);
+          setLoggedIn(false);
+          setIsSuccessful(false);
+          setIsInfoToolTipOpen(true);
+          // history.push("/");
+        } if (res.err) {
+          console.log(res.error);
+          setIsSuccessful(false);
+          setIsInfoToolTipOpen(true)
         }
-        console.log(res, "this is the login res")
         tokenCheck();
-        history.push("/");
       })
       .catch((err) => {
-        console.log(err, "error logging in")
+        console.log(err, "error logging in");
+        setIsSuccessful(false);
+        setIsInfoToolTipOpen(true);
       })
   }
 
@@ -211,7 +218,6 @@ function App() {
           <Header />
           <Switch>
             <ProtectedRoute exact path="/" loggedIn={loggedIn} component={Main}
-              userData={userData}
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
               onEditAvatar={handleEditAvatarClick}
