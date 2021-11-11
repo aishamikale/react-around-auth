@@ -160,7 +160,7 @@ function App() {
         } else {
           setIsSuccessful(true);
           setIsInfoToolTipOpen(true);
-          history.push("/");
+          history.push("/signin");
         }
       })
       .catch((err) => {
