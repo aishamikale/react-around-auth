@@ -1,7 +1,7 @@
 import React from "react";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Card ({ card, onCardClick, onCardLike, onCardDelete }) { 
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   //subscribe to the user context
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -20,8 +20,8 @@ function Card ({ card, onCardClick, onCardLike, onCardDelete }) {
     `card__like-button ${isLiked ? 'card__like-button card__like_button_active' : 'card__like_button'}`
   )
 
-  function handleClick() { 
-    onCardClick(card); 
+  function handleClick() {
+    onCardClick(card);
   }
 
   function handleLikeClick() {
@@ -31,22 +31,20 @@ function Card ({ card, onCardClick, onCardLike, onCardDelete }) {
   function handleDeleteClick() {
     onCardDelete(card)
   }
-   
-  return( 
-    <div className="card-template"> 
-      <li className="card"> 
-          <div className="card__image" style={{backgroundImage: `url(${card.link})`}} onClick={handleClick}/> 
-          <div className="card__info-container"> 
-              <h2 className="card__title">{card.name}</h2>                     
-              <button className={cardDeleteButtonClassName} type="button" aria-label="delete photo" onClick={handleDeleteClick}></button> 
-              <div className="card__button-container"> 
-                  <button className={cardLikeButtonClassName} onClick={handleLikeClick} type="button" aria-label="like photo"></button> 
-                  <p className="card__likes">{card.likes.length}</p>
-              </div> 
-          </div> 
-      </li> 
-    </div> 
-  ); 
-} 
 
-export default Card; 
+  return (
+    <li className="card">
+      <div className="card__image" style={{ backgroundImage: `url(${card.link})` }} onClick={handleClick} />
+      <div className="card__info-container">
+        <h2 className="card__title">{card.name}</h2>
+        <button className={cardDeleteButtonClassName} type="button" aria-label="delete photo" onClick={handleDeleteClick}></button>
+        <div className="card__button-container">
+          <button className={cardLikeButtonClassName} onClick={handleLikeClick} type="button" aria-label="like photo"></button>
+          <p className="card__likes">{card.likes.length}</p>
+        </div>
+      </div>
+    </li>
+  );
+}
+
+export default Card;

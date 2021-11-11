@@ -38,7 +38,7 @@ function App() {
 
   React.useEffect(() => {
     tokenCheck();
-  })
+  }, [])
 
   React.useEffect(() => {
     api.getUsersInfo()
@@ -154,13 +154,14 @@ function App() {
   function handleRegister(email, password) {
     auth.register(email, password)
       .then((res) => {
-        if (!res || res.statusCode === 400) {
-          setIsSuccessful(false);
-          setIsInfoToolTipOpen(true);
-        } else {
+        console.log(res)
+        if (res) {
           setIsSuccessful(true);
           setIsInfoToolTipOpen(true);
           history.push("/signin");
+        } else {
+          setIsSuccessful(false);
+          setIsInfoToolTipOpen(true);
         }
       })
       .catch((err) => {
@@ -183,7 +184,6 @@ function App() {
         })
     } else {
       setLoggedIn(false);
-      setIsSuccessful(false);
     }
   }
 
@@ -200,7 +200,6 @@ function App() {
           setIsSuccessful(false);
           setIsInfoToolTipOpen(true);
         }
-        setIsInfoToolTipOpen(true)
         tokenCheck();
       })
       .catch((err) => {

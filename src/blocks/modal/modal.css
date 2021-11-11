@@ -1,5 +1,8 @@
 @import url(./__button/modal__button.css);
+@import url(./__info/modal__info.css);
 @import url(./__container/modal__container.css);
+@import url(./__icon/modal__icon.css);
+@import url(./__infotool-text/modal__infotool-text.css);
 @import url(./__image/modal__image.css);
 @import url(./__image-title/modal__image-title.css);
 @import url(./__image-container/modal__image-container.css);
